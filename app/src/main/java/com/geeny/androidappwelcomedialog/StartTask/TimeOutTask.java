@@ -8,7 +8,7 @@ import com.geeny.androidappwelcomedialog.WelcomeDialogController;
 
 public class TimeOutTask implements StartTaskInterface {
 
-    private static final int TIMEOUT = 6000;  // 我们设定欢迎界面显示的超时时间为6秒
+    private static final int TIMEOUT = 3000;  // 我们设定欢迎界面显示的超时时间为6秒
 
     private AppStarter appStarter;
 

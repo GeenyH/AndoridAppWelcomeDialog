@@ -16,12 +16,15 @@ public class WelcomeApplication extends Application {
         super.onCreate();
         DeviceRelatedUtil.init(this);
 
-        // 添加启动任务到AppStarter里
+        addStartTask();
+    }
+
+    // 添加启动任务到AppStarter里
+    private void addStartTask() {
         AppStarter.getInstance().add(new ShowAdsStartTaskImpl());
         AppStarter.getInstance().add(new GetConfigStartTaskImpl());
         AppStarter.getInstance().add(new TimeOutTask(AppStarter.getInstance()));
 
         AppStarter.getInstance().start(WelcomeDialogController.getInstance().getListener());  // 执行启动任务
-
     }
 }
