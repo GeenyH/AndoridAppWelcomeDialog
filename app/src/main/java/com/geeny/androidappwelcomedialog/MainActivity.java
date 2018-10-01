@@ -1,13 +1,15 @@
 package com.geeny.androidappwelcomedialog;
 
-import android.content.Intent;
+import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.view.KeyEvent;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.geeny.androidappwelcomedialog.Utils.ActivityBackStackManager;
+
+import java.util.LinkedList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,17 +48,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //点击返回键返回桌面而不是退出程序
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            Intent home = new Intent(Intent.ACTION_MAIN);
-            home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            home.addCategory(Intent.CATEGORY_HOME);
-            startActivity(home);
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if (keyCode == KeyEvent.KEYCODE_BACK) {
+//            Intent home = new Intent(Intent.ACTION_MAIN);
+//            home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//            home.addCategory(Intent.CATEGORY_HOME);
+//            startActivity(home);
+//            return true;
+//        }
+//        return super.onKeyDown(keyCode, event);
+//    }
 
     // 这种方法为true的情况存在于第一次进入MainActivity时、从其它Activity回到MainActivity时发现MainActivity被系统回收（即ActivityBackStackManagerjfd Activity数小于1）
     // 你可能会问，为什么是小于1，因为我们在AndroidManifest.xml中把MainActivity的android:launchMode设置"singleTop"
@@ -67,23 +69,24 @@ public class MainActivity extends AppCompatActivity {
     }
     
 //    返回时确认并退出应用
-//    private long lastExitTime = 0;
-//    @Override
-//    public void onBackPressed() {
-//        if (System.currentTimeMillis() - lastExitTime < 2000){
-//            LinkedList<ActivityBackStackManager.ActvityBackStackElement> actvityBackStackElements = ActivityBackStackManager.getInstance().getActivityBackStacks();
-//            Activity temp;
-//            for (ActivityBackStackManager.ActvityBackStackElement actvityBackStackElement : actvityBackStackElements) {
-//                temp = actvityBackStackElement.weakReference.get();
-//                if (temp != null) {
-//                    temp.finish();
-//                }
-//            }
-//
-//            System.exit(0);
-//        } else {
-//            lastExitTime = System.currentTimeMillis();
-//            Toast.makeText(this, "再按一次退出", Toast.LENGTH_LONG).show();
-//        }
-//    }
+private long lastExitTime = 0;
+
+    @Override
+    public void onBackPressed() {
+        if (System.currentTimeMillis() - lastExitTime < 2000) {
+            LinkedList<ActivityBackStackManager.ActvityBackStackElement> actvityBackStackElements = ActivityBackStackManager.getInstance().getActivityBackStacks();
+            Activity temp;
+            for (ActivityBackStackManager.ActvityBackStackElement actvityBackStackElement : actvityBackStackElements) {
+                temp = actvityBackStackElement.weakReference.get();
+                if (temp != null) {
+                    temp.finish();
+                }
+            }
+
+            System.exit(0);
+        } else {
+            lastExitTime = System.currentTimeMillis();
+            Toast.makeText(this, "再按一次退出", Toast.LENGTH_LONG).show();
+        }
+    }
 }

@@ -12,7 +12,7 @@ public class ShowAdsStartTaskImpl implements StartTaskInterface {
             if (listener != null) {
                 listener.onFinished("ShowAdsFinished");  // task完成后回调并传入标识，执行结束操作
             }
-        }, 5000);  // 假设展示广告时间为5秒
+        }, 2000);  // 假设展示广告时间为5秒
     }
 
     @Override
